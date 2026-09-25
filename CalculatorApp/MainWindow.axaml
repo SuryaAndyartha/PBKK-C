@@ -1,0 +1,238 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CalculatorApp.MainWindow"
+        Title="Calculator"
+        Width="350"
+        Height="560"
+        CanResize="False"
+        Background="#F5F1E8">
+
+    <Window.Styles>
+
+        <!-- Base button look -->
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Background" Value="#FFFDF7"/>
+            <Setter Property="Foreground" Value="#263238"/>
+            <Setter Property="BorderBrush" Value="#3D7773"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F0EDE3"/>
+        </Style>
+
+        <Style Selector="Button:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#E5E1D6"/>
+        </Style>
+
+        <!-- Number buttons (teal) -->
+        <Style Selector="Button.number">
+            <Setter Property="Background" Value="#4AAFA8"/>
+            <Setter Property="Foreground" Value="#263238"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style Selector="Button.number:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#62C2BC"/>
+        </Style>
+
+        <Style Selector="Button.number:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#3D9892"/>
+        </Style>
+
+        <!-- Operator buttons (÷ × − +) -->
+        <Style Selector="Button.operator">
+            <Setter Property="Background" Value="#FFFDF7"/>
+            <Setter Property="Foreground" Value="#263238"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <Style Selector="Button.operator:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F0EDE3"/>
+        </Style>
+
+        <Style Selector="Button.operator:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#E5E1D6"/>
+        </Style>
+
+        <!-- Clear button -->
+        <Style Selector="Button.clear">
+            <Setter Property="Background" Value="#C45A5A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style Selector="Button.clear:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#D16C6C"/>
+        </Style>
+
+        <Style Selector="Button.clear:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#A94747"/>
+        </Style>
+
+        <!-- Equals button -->
+        <Style Selector="Button.equals">
+            <Setter Property="Background" Value="#C45A5A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style Selector="Button.equals:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#D16C6C"/>
+        </Style>
+
+        <Style Selector="Button.equals:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="#A94747"/>
+        </Style>
+
+    </Window.Styles>
+
+    <Border Background="#F5F1E8"
+            BorderBrush="#3D7773"
+            BorderThickness="3"
+            CornerRadius="28"
+            Padding="20"
+            Margin="14">
+
+        <StackPanel Spacing="16">
+
+            <TextBlock Text="Calculator"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#263238"
+                       HorizontalAlignment="Center"/>
+
+            <!-- Display -->
+            <Border Background="#FFFDF7"
+                    BorderBrush="#263238"
+                    BorderThickness="2"
+                    CornerRadius="16"
+                    Padding="18,14">
+
+                <TextBox x:Name="txtDisplay"
+                         Text="0"
+                         FontSize="38"
+                         FontWeight="Bold"
+                         Foreground="#263238"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         HorizontalContentAlignment="Right"
+                         IsReadOnly="True"
+                         CaretBrush="Transparent"/>
+
+            </Border>
+
+            <Grid RowDefinitions="*,*,*,*,*"
+                  ColumnDefinitions="*,*,*,*"
+                  RowSpacing="6"
+                  ColumnSpacing="6"
+                  Height="300">
+
+                <!-- Row 1 -->
+                <Button Grid.Row="0" Grid.Column="0"
+                        Classes="number"
+                        Content="7"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="0" Grid.Column="1"
+                        Classes="number"
+                        Content="8"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="0" Grid.Column="2"
+                        Classes="number"
+                        Content="9"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="0" Grid.Column="3"
+                        Classes="operator"
+                        Content="÷"
+                        Click="OperatorButton_Click"/>
+
+                <!-- Row 2 -->
+                <Button Grid.Row="1" Grid.Column="0"
+                        Classes="number"
+                        Content="4"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="1" Grid.Column="1"
+                        Classes="number"
+                        Content="5"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="1" Grid.Column="2"
+                        Classes="number"
+                        Content="6"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="1" Grid.Column="3"
+                        Classes="operator"
+                        Content="×"
+                        Click="OperatorButton_Click"/>
+
+                <!-- Row 3 -->
+                <Button Grid.Row="2" Grid.Column="0"
+                        Classes="number"
+                        Content="1"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="2" Grid.Column="1"
+                        Classes="number"
+                        Content="2"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="2" Grid.Column="2"
+                        Classes="number"
+                        Content="3"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="2" Grid.Column="3"
+                        Classes="operator"
+                        Content="−"
+                        Click="OperatorButton_Click"/>
+
+                <!-- Row 4 -->
+                <Button Grid.Row="3" Grid.Column="0"
+                        Classes="number"
+                        Content="0"
+                        Click="NumberButton_Click"/>
+
+                <Button Grid.Row="3" Grid.Column="1"
+                        Classes="operator"
+                        Content="."
+                        Click="btnDecimal_Click"/>
+
+                <Button Grid.Row="3" Grid.Column="2"
+                        Classes="clear"
+                        Content="C"
+                        Click="btnClear_Click"/>
+
+                <Button Grid.Row="3" Grid.Column="3"
+                        Classes="operator"
+                        Content="+"
+                        Click="OperatorButton_Click"/>
+
+                <!-- Row 5 -->
+                <Button Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Classes="equals"
+                        Content="="
+                        Click="btnEquals_Click"/>
+
+            </Grid>
+
+        </StackPanel>
+
+    </Border>
+
+</Window>
