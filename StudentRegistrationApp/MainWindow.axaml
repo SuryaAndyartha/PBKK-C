@@ -1,0 +1,201 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="StudentRegistrationApp.MainWindow"
+        Title="StudentRegistrationApp">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock 
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="STUDENT REGISTRATION"
+            FontSize="28"
+            FontWeight="Bold"
+            Margin="0,0,0,25"/>
+
+        <TextBlock
+            Grid.Row="1"
+            Text="NIM"/>
+
+        <TextBox
+            x:Name="txtNim"
+            Grid.Row="2"
+            Height="35"
+            Margin="0,5,0,0"/>
+
+        <TextBlock
+            Grid.Row="3"
+            Text="Nama Mahasiswa"
+            Margin="0,15,0,0"/>
+
+        <TextBox
+            x:Name="txtNama"
+            Grid.Row="4"
+            Height="35"
+            Margin="0,5,0,0"/>
+
+        <TextBlock
+            Grid.Row="5"
+            Text="Program Studi"
+            Margin="0,15,0,0"/>
+        
+        <ComboBox
+            x:Name="cmbProdi"
+            Grid.Row="6"
+            Height="35"
+            Margin="0,5,0,0">
+
+            <ComboBoxItem Content="Teknik Informatika"/>
+            <ComboBoxItem Content="Sistem Informasi"/>
+            <ComboBoxItem Content="Manajemen"/>
+            <ComboBoxItem Content="Akuntansi"/>
+
+        </ComboBox>
+        
+        <TextBlock
+            Grid.Row="7"
+            Text="Gender"
+            Margin="0,15,0,0"/>
+        
+        <StackPanel
+            Grid.Row="8"
+            Orientation="Horizontal"
+            Margin="0,5,0,0">
+    
+            <RadioButton
+                x:Name="rbLaki"
+                Content="Laki-laki"
+                Margin="0,0,20,0"/>
+            
+            <RadioButton
+                x:Name="rbPerempuan"
+                Content="Perempuan"
+            />
+        </StackPanel>
+
+        <TextBlock
+            Grid.Row="9"
+            Text="Tanggal Lahir"
+            Margin="0,15,0,0"/>
+
+        <DatePicker
+            x:Name="dpTanggalLahir"
+            Grid.Row="10"
+            Height="35"
+            Margin="0,5,0,0"/>
+        
+        <TextBlock
+            Grid.Row="11"
+            Text="Alamat"
+            Margin="0,15,0,0"/>
+
+        <TextBox
+            x:Name="txtAlamat"
+            Grid.Row="12"
+            Height="70"
+            Margin="0,5,0,0"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"/>
+
+        <TextBlock
+            Grid.Row="13"
+            Text="Nomor HP"
+            Margin="0,15,0,0"/>
+
+        <TextBox
+            x:Name="txtNoHp"
+            Grid.Row="14"
+            Height="35"
+            Margin="0,5,0,0"/>
+
+        <StackPanel
+            Grid.Row="15"
+            Orientation="Horizontal"
+            Margin="0,20,0,0">
+
+            <Button
+                x:Name="btnSimpan"
+                Content="Simpan"
+                Width="100"
+                Height="35"
+                Margin="0,0,10,0"
+                Click="BtnSimpan_Click"/>
+
+            <Button
+                x:Name="btnReset"
+                Content="Reset"
+                Width="100"
+                Height="35"
+                Margin="0,0,10,0"
+                Click="BtnReset_Click"/>
+
+            <Button
+                x:Name="btnHapus"
+                Content="Hapus"
+                Width="100"
+                Height="35"
+                Margin="0,0,10,0"
+                Click="BtnHapus_Click"/>
+
+            <Button
+                x:Name="btnEdit"
+                Content="Edit"
+                Width="100"
+                Height="35"
+                Margin="0,0,10,0"
+                Click="BtnEdit_Click"/>
+
+        </StackPanel>
+
+        <!-- <Button
+            x:Name="btnSimpan"
+            Grid.Row="9"
+            Content="Simpan"
+            Width="100"
+            Height="35"
+            Margin="0,20,0,0"
+            Click="BtnSimpan_Click"/> -->
+
+        <StackPanel Grid.Column="2" Grid.RowSpan="10">
+
+            <TextBlock
+                Text="DATA MAHASISWA"
+                FontSize="24"
+                FontWeight="Bold"
+                Margin="0,0,0,20"/>
+
+            <ListBox
+                x:Name="lstMahasiswa"
+                Height="350"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
