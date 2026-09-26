@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
@@ -7,6 +8,10 @@ namespace StudentRegistrationApp;
 
 public partial class MainWindow : Window
 {
+
+    private int indexEdit = -1;
+
+    private List<string> semuaMahasiswa = new();
     public MainWindow()
     {
         InitializeComponent();
@@ -83,12 +88,16 @@ public partial class MainWindow : Window
 
         string data = $"{nim} | {nama} | {prodi} | {jenisKelamin} | {tanggalLahir:dd-MM-yyyy} | {alamat} | {noHp}";
 
-        lstMahasiswa.Items.Add(data);
-
-        // await MessageBoxManager.GetMessageBoxStandard(
-        //     "Informasi",
-        //     "Data mahasiswa berhasil disimpan!"
-        // ).ShowAsync();
+        if(indexEdit == -1)
+        {
+            semuaMahasiswa.Add(data);
+            lstMahasiswa.Items.Add(data);
+        }
+        else
+        {
+            lstMahasiswa.Items[indexEdit] = data;
+            indexEdit = -1;
+        }
     }
 
     private void BtnReset_Click(object? sender, RoutedEventArgs e)
@@ -105,6 +114,8 @@ public partial class MainWindow : Window
 
         txtAlamat.Clear();
         txtNoHp.Clear();
+
+        indexEdit = -1;
 
         txtNim.Focus();
     }
@@ -126,24 +137,13 @@ public partial class MainWindow : Window
             return;
         }
 
-        string data = lstMahasiswa.SelectedItem.ToString() ?? "";
+        indexEdit = lstMahasiswa.SelectedIndex;
 
+        string data = lstMahasiswa.SelectedItem.ToString() ?? "";
         string[] bagian = data.Split(" | ");
 
         txtNim.Text = bagian[0];
         txtNama.Text = bagian[1];
-
-        // if(cmbProdi.ItemsSource == null)
-        // {
-        //     foreach(ComboBoxItem item in cmbProdi.Items)
-        //     {
-        //         if(item.Content?.ToString() == bagian[2])
-        //         {
-        //             cmbProdi.SelectedItem = item;
-        //             break;
-        //         }
-        //     }
-        // }
 
         if(cmbProdi.ItemsSource == null)
         {
@@ -157,23 +157,12 @@ public partial class MainWindow : Window
             }
         }
 
-        string prodi = "";
-
-        if(cmbProdi.SelectedItem is ComboBoxItem selectedProdi)
-        {
-            prodi = selectedProdi.Content?.ToString() ?? "";
-        }
-
-        string jenisKelamin = "";
-
         if(bagian[3] == "Laki-laki")
         {
             rbLaki.IsChecked = true;
-            jenisKelamin = "Laki-laki";
         }
         else if(bagian[3] == "Perempuan"){
             rbPerempuan.IsChecked = true;
-            jenisKelamin = "Perempuan";
         }
 
         if(DateTimeOffset.TryParseExact(
@@ -185,11 +174,20 @@ public partial class MainWindow : Window
 
         txtAlamat.Text = bagian[5];
         txtNoHp.Text = bagian[6];
+    }
 
-        string dataBaru = $"{txtNim.Text} | {txtNama.Text} | {prodi} | {jenisKelamin} | {dpTanggalLahir.SelectedDate:dd-MM-yyyy} | {txtAlamat.Text} | {txtNoHp.Text}";
+    private void BtnCari_Click(object? sender, RoutedEventArgs e)
+    {
+        string keyword = txtCari.Text ?? "";
 
-        int index = lstMahasiswa.SelectedIndex;
+        lstMahasiswa.Items.Clear();
 
-        lstMahasiswa.Items[index] = dataBaru;
+        foreach(string data in semuaMahasiswa)
+        {
+            if(data.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            {
+                lstMahasiswa.Items.Add(data);
+            }
+        }
     }
 }

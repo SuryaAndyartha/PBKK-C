@@ -174,15 +174,6 @@
 
         </StackPanel>
 
-        <!-- <Button
-            x:Name="btnSimpan"
-            Grid.Row="9"
-            Content="Simpan"
-            Width="100"
-            Height="35"
-            Margin="0,20,0,0"
-            Click="BtnSimpan_Click"/> -->
-
         <StackPanel Grid.Column="2" Grid.RowSpan="10">
 
             <TextBlock
@@ -190,6 +181,21 @@
                 FontSize="24"
                 FontWeight="Bold"
                 Margin="0,0,0,20"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox
+                    x:Name="txtCari"
+                    Width="250"
+                    Height="35"
+                    PlaceholderText="Cari mahasiswa..."/>
+
+                <Button
+                    Content="Cari"
+                    Width="80"
+                    Height="35"
+                    Margin="10,0,0,0"
+                    Click="BtnCari_Click"/>
+            </StackPanel>
 
             <ListBox
                 x:Name="lstMahasiswa"
