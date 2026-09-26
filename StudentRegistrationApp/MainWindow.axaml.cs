@@ -12,9 +12,13 @@ public partial class MainWindow : Window
     private int indexEdit = -1;
 
     private List<string> semuaMahasiswa = new();
+
+    private List<int> indexHasilSearch = new();
     public MainWindow()
     {
         InitializeComponent();
+
+        UpdateCounter();
     }
 
     private void BtnSimpan_Click(object? sender, RoutedEventArgs e)
@@ -92,11 +96,25 @@ public partial class MainWindow : Window
         {
             semuaMahasiswa.Add(data);
             lstMahasiswa.Items.Add(data);
+
+            UpdateCounter();
         }
         else
         {
-            lstMahasiswa.Items[indexEdit] = data;
+            semuaMahasiswa[indexEdit] = data;
+
             indexEdit = -1;
+
+            txtCari.Text = "";
+
+            lstMahasiswa.Items.Clear();
+
+            foreach(string mahasiswa in semuaMahasiswa)
+            {
+                lstMahasiswa.Items.Add(mahasiswa);
+            }
+
+            indexHasilSearch.Clear();
         }
     }
 
@@ -117,6 +135,18 @@ public partial class MainWindow : Window
 
         indexEdit = -1;
 
+        txtCari.Text = "";
+        UpdateCounter();
+
+        lstMahasiswa.Items.Clear();
+
+        foreach(string mahasiswa in semuaMahasiswa)
+        {
+            lstMahasiswa.Items.Add(mahasiswa);
+        }
+
+        indexHasilSearch.Clear();
+
         txtNim.Focus();
     }
 
@@ -127,7 +157,29 @@ public partial class MainWindow : Window
             return;
         }
 
-        lstMahasiswa.Items.Remove(lstMahasiswa.SelectedItem);
+        int indexListBox = lstMahasiswa.SelectedIndex;
+        int indexData;
+
+        if(indexHasilSearch.Count > 0)
+        {
+            indexData = indexHasilSearch[indexListBox];
+        }
+        else
+        {
+            indexData = indexListBox;
+        }
+
+        semuaMahasiswa.RemoveAt(indexData);
+        UpdateCounter();
+
+        lstMahasiswa.Items.Clear();
+
+        foreach(string mahasiswa in semuaMahasiswa)
+        {
+            lstMahasiswa.Items.Add(mahasiswa);
+        }
+
+        indexHasilSearch.Clear();
     }
 
     private void BtnEdit_Click(object? sender, RoutedEventArgs e)
@@ -137,7 +189,16 @@ public partial class MainWindow : Window
             return;
         }
 
-        indexEdit = lstMahasiswa.SelectedIndex;
+        int indexListBox = lstMahasiswa.SelectedIndex;
+
+        if(indexHasilSearch.Count > 0)
+        {
+            indexEdit = indexHasilSearch[indexListBox];
+        }
+        else
+        {
+            indexEdit = indexListBox;
+        }
 
         string data = lstMahasiswa.SelectedItem.ToString() ?? "";
         string[] bagian = data.Split(" | ");
@@ -181,13 +242,29 @@ public partial class MainWindow : Window
         string keyword = txtCari.Text ?? "";
 
         lstMahasiswa.Items.Clear();
+        indexHasilSearch.Clear();
 
-        foreach(string data in semuaMahasiswa)
+        for(int i = 0; i < semuaMahasiswa.Count; i++)
         {
+            string data = semuaMahasiswa[i];
+
             if(data.Contains(keyword, StringComparison.OrdinalIgnoreCase))
             {
                 lstMahasiswa.Items.Add(data);
+                indexHasilSearch.Add(i);
             }
         }
+
+        UpdateSearchCounter(lstMahasiswa.Items.Count);
+    }
+
+    private void UpdateCounter()
+    {
+        txtCounter.Text = $"Total Mahasiswa: {semuaMahasiswa.Count}";
+    }
+
+    private void UpdateSearchCounter(int jumlahHasil)
+    {
+        txtCounter.Text = $"Hasil Pencarian: {jumlahHasil} dari {semuaMahasiswa.Count}";
     }
 }

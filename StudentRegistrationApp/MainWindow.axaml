@@ -197,6 +197,12 @@
                     Click="BtnCari_Click"/>
             </StackPanel>
 
+            <TextBlock
+                x:Name="txtCounter"
+                Text="Total Mahasiswa: 0"
+                FontSize="16"
+                Margin="0,0,0,10"/>
+
             <ListBox
                 x:Name="lstMahasiswa"
                 Height="350"/>
