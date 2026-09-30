@@ -1,0 +1,441 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1120" d:DesignHeight="800"
+        x:Class="FoodOrdering.MainWindow"
+        Title="Food Ordering"
+        Width="1120" Height="800"
+        MinWidth="1000" MinHeight="760"
+        Background="#FFF8F1"
+        Foreground="#292524"
+        RequestedThemeVariant="Light"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- ============================================================ -->
+    <!--  Resource: warna kontrol bawaan Fluent diganti ke tone oranye -->
+    <!-- ============================================================ -->
+    <Window.Resources>
+
+        <!-- TextBox -->
+        <SolidColorBrush x:Key="TextControlBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextControlBorderBrush" Color="#E7DCD2"/>
+        <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#FDBA74"/>
+        <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#F97316"/>
+        <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#A8A29E"/>
+        <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#A8A29E"/>
+        <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#D6D3D1"/>
+
+        <!-- ComboBox -->
+        <SolidColorBrush x:Key="ComboBoxBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#FFF7ED"/>
+        <SolidColorBrush x:Key="ComboBoxBackgroundUnfocused" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#E7DCD2"/>
+        <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#FDBA74"/>
+        <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#F97316"/>
+        <SolidColorBrush x:Key="ComboBoxBackgroundBorderBrushFocused" Color="#F97316"/>
+        <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="#FFF7ED"/>
+        <SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="#FFEDD5"/>
+        <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="#FFEDD5"/>
+        <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="#FED7AA"/>
+        <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="#FED7AA"/>
+
+        <!-- RadioButton -->
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseStroke" Color="#D6C7BB"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="#F97316"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="#EA580C"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="#F97316"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="#EA580C"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPressed" Color="#C2410C"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="#F97316"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="#EA580C"/>
+        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePressed" Color="#C2410C"/>
+
+    </Window.Resources>
+
+    <Window.Styles>
+
+        <!-- ===================== Card ===================== -->
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFE4CC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="BoxShadow" Value="0 4 18 0 #14C2410C"/>
+        </Style>
+
+        <!-- Penanda oranye di samping judul bagian -->
+        <Style Selector="Border.accent">
+            <Setter Property="Width" Value="4"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Background" Value="#F97316"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Garis pemisah -->
+        <Style Selector="Border.divider">
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Background" Value="#FFEDD5"/>
+        </Style>
+
+        <!-- ===================== Teks ===================== -->
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#431407"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#78716C"/>
+            <Setter Property="Margin" Value="2,0,0,6"/>
+        </Style>
+
+        <!-- ===================== Input ===================== -->
+        <Style Selector="TextBox">
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="#F97316"/>
+            <Setter Property="SelectionBrush" Value="#FDBA74"/>
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <!--
+            Perbaikan tabrakan: DatePicker bawaan Fluent punya MinWidth sekitar 296,
+            lebih lebar dari kolomnya sehingga menimpa ComboBox di sebelahnya.
+            MinWidth diset 0 agar DatePicker mengikuti lebar kolom.
+        -->
+        <Style Selector="DatePicker">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MaxWidth" Value="10000"/>
+        </Style>
+        <Style Selector="DatePicker /template/ Button#PART_FlyoutButton">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderBrush" Value="#E7DCD2"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style Selector="DatePicker:pointerover /template/ Button#PART_FlyoutButton">
+            <Setter Property="BorderBrush" Value="#FDBA74"/>
+        </Style>
+
+        <Style Selector="RadioButton">
+            <Setter Property="Padding" Value="8,0,0,0"/>
+        </Style>
+
+        <!-- ===================== Button dasar (outline oranye) ===================== -->
+        <Style Selector="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="MinWidth" Value="96"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FDBA74"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#C2410C"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFF7ED"/>
+            <Setter Property="BorderBrush" Value="#FB923C"/>
+            <Setter Property="Foreground" Value="#C2410C"/>
+        </Style>
+        <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFEDD5"/>
+            <Setter Property="BorderBrush" Value="#F97316"/>
+            <Setter Property="Foreground" Value="#9A3412"/>
+        </Style>
+
+        <!-- ===================== Button utama ===================== -->
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#F97316"/>
+            <Setter Property="BorderBrush" Value="#F97316"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#EA580C"/>
+            <Setter Property="BorderBrush" Value="#EA580C"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#C2410C"/>
+            <Setter Property="BorderBrush" Value="#C2410C"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- ===================== Button hapus ===================== -->
+        <Style Selector="Button.danger">
+            <Setter Property="Foreground" Value="#DC2626"/>
+            <Setter Property="BorderBrush" Value="#FCA5A5"/>
+        </Style>
+        <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FEF2F2"/>
+            <Setter Property="BorderBrush" Value="#EF4444"/>
+            <Setter Property="Foreground" Value="#DC2626"/>
+        </Style>
+        <Style Selector="Button.danger:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FEE2E2"/>
+            <Setter Property="BorderBrush" Value="#DC2626"/>
+            <Setter Property="Foreground" Value="#B91C1C"/>
+        </Style>
+
+        <!-- ===================== Daftar pesanan ===================== -->
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="#FFFDFB"/>
+            <Setter Property="BorderBrush" Value="#FFE4CC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="6"/>
+        </Style>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Foreground" Value="#292524"/>
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFF7ED"/>
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFEDD5"/>
+            <Setter Property="Foreground" Value="#7C2D12"/>
+        </Style>
+        <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FED7AA"/>
+        </Style>
+        <Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#FFEDD5"/>
+        </Style>
+
+    </Window.Styles>
+
+    <Grid Margin="28" RowDefinitions="Auto,*">
+
+        <!-- ===================== Header ===================== -->
+        <Border Grid.Row="0"
+                Margin="0,0,0,20"
+                CornerRadius="16"
+                ClipToBounds="True">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#FB923C" Offset="0"/>
+                    <GradientStop Color="#EA580C" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <!-- Dekorasi lingkaran -->
+                <Ellipse Width="230" Height="230"
+                         Fill="#1FFFFFFF"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Margin="0,-100,-50,0"/>
+                <Ellipse Width="150" Height="150"
+                         Fill="#14FFFFFF"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Bottom"
+                         Margin="0,0,150,-80"/>
+
+                <StackPanel Margin="28,22" Spacing="4">
+                    <TextBlock
+                        Text="Food Ordering"
+                        FontSize="28"
+                        FontWeight="Bold"
+                        Foreground="White"/>
+                    <TextBlock
+                        Text="Kelola pesanan pelanggan dengan mudah"
+                        FontSize="13"
+                        Foreground="White"
+                        Opacity="0.88"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ===================== Konten ===================== -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,24,*">
+
+            <!-- ===== Form Pesanan ===== -->
+            <Border Grid.Column="0" Classes="card">
+                <StackPanel Spacing="14">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Border Classes="accent"/>
+                        <TextBlock Classes="section" Text="Form Pesanan"/>
+                    </StackPanel>
+
+                    <Border Classes="divider"/>
+
+                    <Grid ColumnDefinitions="*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Classes="label" Text="Kode Pesanan"/>
+                            <TextBox
+                                x:Name="txtKode"
+                                PlaceholderText="Contoh: ORD-001"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Classes="label" Text="Nama Pelanggan"/>
+                            <TextBox x:Name="txtPelanggan"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,16,*">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Classes="label" Text="Menu"/>
+                            <ComboBox x:Name="cmbMenu" PlaceholderText="Pilih menu">
+                                <ComboBoxItem Content="Nasi Goreng"/>
+                                <ComboBoxItem Content="Mie Ayam"/>
+                                <ComboBoxItem Content="Ayam Bakar"/>
+                                <ComboBoxItem Content="Es Teh Manis"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Classes="label" Text="Tanggal Pesanan"/>
+                            <DatePicker x:Name="dpTanggal"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Tipe Pesanan"/>
+                        <StackPanel Orientation="Horizontal" Spacing="24">
+                            <RadioButton
+                                x:Name="rbDineIn"
+                                GroupName="TipePesanan"
+                                Content="Dine In"/>
+                            <RadioButton
+                                x:Name="rbTakeAway"
+                                GroupName="TipePesanan"
+                                Content="Take Away"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Catatan Pesanan"/>
+                        <TextBox
+                            x:Name="txtCatatan"
+                            Height="84"
+                            Padding="12,10"
+                            AcceptsReturn="True"
+                            TextWrapping="Wrap"
+                            VerticalContentAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Classes="label" Text="Nomor HP"/>
+                        <TextBox x:Name="txtNoHp"/>
+                    </StackPanel>
+
+                    <Border Classes="divider" Margin="0,4,0,0"/>
+
+                    <!-- Aksi -->
+                    <Grid ColumnDefinitions="Auto,10,Auto,*,Auto,10,Auto">
+                        <Button
+                            x:Name="btnSimpan"
+                            Grid.Column="0"
+                            Classes="primary"
+                            Content="Simpan"
+                            Click="BtnSimpan_Click"/>
+
+                        <Button
+                            x:Name="btnReset"
+                            Grid.Column="2"
+                            Content="Reset"
+                            Click="BtnReset_Click"/>
+
+                        <Button
+                            x:Name="btnEdit"
+                            Grid.Column="4"
+                            Content="Edit"
+                            Click="BtnEdit_Click"/>
+
+                        <Button
+                            x:Name="btnHapus"
+                            Grid.Column="6"
+                            Classes="danger"
+                            Content="Hapus"
+                            Click="BtnHapus_Click"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Daftar Pesanan ===== -->
+            <Border Grid.Column="2" Classes="card">
+                <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="14">
+
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Border Classes="accent"/>
+                            <TextBlock Classes="section" Text="Daftar Pesanan"/>
+                        </StackPanel>
+
+                        <Border
+                            Grid.Column="1"
+                            Background="#FFEDD5"
+                            CornerRadius="12"
+                            Padding="12,5"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                x:Name="txtCounter"
+                                Text="Total Pesanan: 0"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#C2410C"/>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="1" Classes="divider"/>
+
+                    <Grid Grid.Row="2" ColumnDefinitions="*,10,Auto">
+                        <TextBox
+                            x:Name="txtCari"
+                            Grid.Column="0"
+                            PlaceholderText="Cari pesanan..."/>
+
+                        <Button
+                            Grid.Column="2"
+                            Content="Cari"
+                            Click="BtnCari_Click"/>
+                    </Grid>
+
+                    <ListBox
+                        x:Name="lstPesanan"
+                        Grid.Row="3"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock
+                                    Text="{Binding}"
+                                    FontSize="13"
+                                    TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>
