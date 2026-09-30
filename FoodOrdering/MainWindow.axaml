@@ -100,6 +100,17 @@
             <Setter Property="Margin" Value="2,0,0,6"/>
         </Style>
 
+        <!-- Pesan error validasi (disembunyikan sampai dipicu dari code-behind) -->
+        <Style Selector="TextBlock.error">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#DC2626"/>
+            <Setter Property="Margin" Value="8,0,2,6"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+
         <!-- ===================== Input ===================== -->
         <Style Selector="TextBox">
             <Setter Property="MinHeight" Value="40"/>
@@ -278,30 +289,69 @@
             <Border Grid.Column="0" Classes="card">
                 <StackPanel Spacing="14">
 
-                    <StackPanel Orientation="Horizontal">
-                        <Border Classes="accent"/>
-                        <TextBlock Classes="section" Text="Form Pesanan"/>
-                    </StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Border Classes="accent"/>
+                            <TextBlock Classes="section" Text="Form Pesanan"/>
+                        </StackPanel>
+
+                        <!-- Pesan umum: muncul jika semua field kosong -->
+                        <Border
+                            x:Name="bdrErrorUmum"
+                            Grid.Column="1"
+                            IsVisible="False"
+                            Background="#FEE2E2"
+                            CornerRadius="12"
+                            Padding="12,5"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Text="Semua field wajib diisi"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#DC2626"/>
+                        </Border>
+                    </Grid>
 
                     <Border Classes="divider"/>
 
                     <Grid ColumnDefinitions="*,16,*">
                         <StackPanel Grid.Column="0">
-                            <TextBlock Classes="label" Text="Kode Pesanan"/>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <TextBlock Classes="label" Text="Kode Pesanan"/>
+                                <TextBlock
+                                    x:Name="errKode"
+                                    Grid.Column="1"
+                                    Classes="error"
+                                    Text="Kode wajib diisi"/>
+                            </Grid>
                             <TextBox
                                 x:Name="txtKode"
                                 PlaceholderText="Contoh: ORD-001"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="2">
-                            <TextBlock Classes="label" Text="Nama Pelanggan"/>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <TextBlock Classes="label" Text="Nama Pelanggan"/>
+                                <TextBlock
+                                    x:Name="errPelanggan"
+                                    Grid.Column="1"
+                                    Classes="error"
+                                    Text="Nama wajib diisi"/>
+                            </Grid>
                             <TextBox x:Name="txtPelanggan"/>
                         </StackPanel>
                     </Grid>
 
                     <Grid ColumnDefinitions="*,16,*">
                         <StackPanel Grid.Column="0">
-                            <TextBlock Classes="label" Text="Menu"/>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <TextBlock Classes="label" Text="Menu"/>
+                                <TextBlock
+                                    x:Name="errMenu"
+                                    Grid.Column="1"
+                                    Classes="error"
+                                    Text="Menu belum dipilih"/>
+                            </Grid>
                             <ComboBox x:Name="cmbMenu" PlaceholderText="Pilih menu">
                                 <ComboBoxItem Content="Nasi Goreng"/>
                                 <ComboBoxItem Content="Mie Ayam"/>
@@ -311,13 +361,27 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2">
-                            <TextBlock Classes="label" Text="Tanggal Pesanan"/>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <TextBlock Classes="label" Text="Tanggal Pesanan"/>
+                                <TextBlock
+                                    x:Name="errTanggal"
+                                    Grid.Column="1"
+                                    Classes="error"
+                                    Text="Tanggal belum dipilih"/>
+                            </Grid>
                             <DatePicker x:Name="dpTanggal"/>
                         </StackPanel>
                     </Grid>
 
                     <StackPanel>
-                        <TextBlock Classes="label" Text="Tipe Pesanan"/>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Classes="label" Text="Tipe Pesanan"/>
+                            <TextBlock
+                                x:Name="errTipe"
+                                Grid.Column="1"
+                                Classes="error"
+                                Text="Tipe pesanan belum dipilih"/>
+                        </Grid>
                         <StackPanel Orientation="Horizontal" Spacing="24">
                             <RadioButton
                                 x:Name="rbDineIn"
@@ -331,7 +395,14 @@
                     </StackPanel>
 
                     <StackPanel>
-                        <TextBlock Classes="label" Text="Catatan Pesanan"/>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Classes="label" Text="Catatan Pesanan"/>
+                            <TextBlock
+                                x:Name="errCatatan"
+                                Grid.Column="1"
+                                Classes="error"
+                                Text="Catatan wajib diisi"/>
+                        </Grid>
                         <TextBox
                             x:Name="txtCatatan"
                             Height="84"
@@ -342,7 +413,14 @@
                     </StackPanel>
 
                     <StackPanel>
-                        <TextBlock Classes="label" Text="Nomor HP"/>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Classes="label" Text="Nomor HP"/>
+                            <TextBlock
+                                x:Name="errNoHp"
+                                Grid.Column="1"
+                                Classes="error"
+                                Text="Nomor HP wajib diisi"/>
+                        </Grid>
                         <TextBox x:Name="txtNoHp"/>
                     </StackPanel>
 

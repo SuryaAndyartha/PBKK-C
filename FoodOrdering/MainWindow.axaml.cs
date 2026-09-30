@@ -24,52 +24,82 @@ public partial class MainWindow : Window
 
     private void BtnSimpan_Click(object? sender, RoutedEventArgs e)
     {
+        // Sembunyikan pesan error dari percobaan simpan sebelumnya
+        SembunyikanError();
+
+        // Field kosong pertama yang akan mendapat focus
+        Control? fieldKosongPertama = null;
+
+        // Jumlah field yang kosong (untuk pesan umum jika semua kosong)
+        int jumlahKosong = 0;
+        const int totalField = 7;
+
         // Validasi kode pesanan
         if (string.IsNullOrWhiteSpace(txtKode.Text))
         {
-            txtKode.Focus();
-            return;
+            errKode.IsVisible = true;
+            fieldKosongPertama ??= txtKode;
+            jumlahKosong++;
         }
 
         // Validasi nama pelanggan
         if (string.IsNullOrWhiteSpace(txtPelanggan.Text))
         {
-            txtPelanggan.Focus();
-            return;
+            errPelanggan.IsVisible = true;
+            fieldKosongPertama ??= txtPelanggan;
+            jumlahKosong++;
         }
 
         // Validasi menu
         if (cmbMenu.SelectedItem == null)
         {
-            cmbMenu.Focus();
-            return;
+            errMenu.IsVisible = true;
+            fieldKosongPertama ??= cmbMenu;
+            jumlahKosong++;
         }
 
         // Validasi tipe pesanan
         if (rbDineIn.IsChecked != true && rbTakeAway.IsChecked != true)
         {
-            rbDineIn.Focus();
-            return;
+            errTipe.IsVisible = true;
+            fieldKosongPertama ??= rbDineIn;
+            jumlahKosong++;
         }
 
         // Validasi tanggal pesanan
         if (dpTanggal.SelectedDate == null)
         {
-            dpTanggal.Focus();
-            return;
+            errTanggal.IsVisible = true;
+            fieldKosongPertama ??= dpTanggal;
+            jumlahKosong++;
         }
 
         // Validasi catatan
         if (string.IsNullOrWhiteSpace(txtCatatan.Text))
         {
-            txtCatatan.Focus();
-            return;
+            errCatatan.IsVisible = true;
+            fieldKosongPertama ??= txtCatatan;
+            jumlahKosong++;
         }
 
         // Validasi nomor HP
         if (string.IsNullOrWhiteSpace(txtNoHp.Text))
         {
-            txtNoHp.Focus();
+            errNoHp.IsVisible = true;
+            fieldKosongPertama ??= txtNoHp;
+            jumlahKosong++;
+        }
+
+        // Jika semua field kosong, tampilkan juga pesan umum
+        if (jumlahKosong == totalField)
+        {
+            bdrErrorUmum.IsVisible = true;
+        }
+
+        // Ada field kosong -> focus ke field kosong pertama, data tidak disimpan
+        if (fieldKosongPertama != null)
+        {
+            fieldKosongPertama.Focus();
             return;
         }
 
@@ -94,7 +124,7 @@ public partial class MainWindow : Window
             tipePesanan = "Take Away";
         }
 
-        DateTimeOffset tanggalPesanan = dpTanggal.SelectedDate.Value;
+        DateTimeOffset tanggalPesanan = dpTanggal.SelectedDate!.Value;
 
         string catatan = txtCatatan.Text?.Trim() ?? "";
         string noHp = txtNoHp.Text?.Trim() ?? "";
@@ -253,6 +283,9 @@ public partial class MainWindow : Window
         // Isi nomor HP
         txtNoHp.Text = bagian[6];
 
+        // Form sudah terisi dari data, pesan error lama tidak relevan lagi
+        SembunyikanError();
+
         // Setelah data diedit, pencarian tidak lagi diperlukan
         txtCari.Text = "";
         indexHasilSearch.Clear();
@@ -315,6 +348,23 @@ public partial class MainWindow : Window
 
         txtCatatan.Clear();
         txtNoHp.Clear();
+
+        // Pesan error ikut dibersihkan bersama form
+        SembunyikanError();
+    }
+
+    // Menyembunyikan seluruh pesan validasi
+    private void SembunyikanError()
+    {
+        bdrErrorUmum.IsVisible = false;
+
+        errKode.IsVisible = false;
+        errPelanggan.IsVisible = false;
+        errMenu.IsVisible = false;
+        errTipe.IsVisible = false;
+        errTanggal.IsVisible = false;
+        errCatatan.IsVisible = false;
+        errNoHp.IsVisible = false;
     }
 
     private void UpdateCounter()
