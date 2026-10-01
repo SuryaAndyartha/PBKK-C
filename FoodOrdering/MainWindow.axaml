@@ -428,6 +428,8 @@
 
                     <!-- Aksi -->
                     <Grid ColumnDefinitions="Auto,10,Auto,*,Auto,10,Auto">
+                        <!-- <Button Content="Test Database" Click="BtnTestDatabase_Click"/> Only for database testing --> 
+                        
                         <Button
                             x:Name="btnSimpan"
                             Grid.Column="0"

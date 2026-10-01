@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using System.Threading.Tasks;
 
 namespace FoodOrdering;
 
 public partial class MainWindow : Window
 {
+    private readonly DatabaseService database = new();
     private int indexEdit = -1;
 
     // Menyimpan seluruh data pesanan
@@ -20,9 +22,11 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         UpdateCounter();
+
+        _ = LoadDataFromDatabaseAsync();
     }
 
-    private void BtnSimpan_Click(object? sender, RoutedEventArgs e)
+    private async void BtnSimpan_Click(object? sender, RoutedEventArgs e)
     {
         // Sembunyikan pesan error dari percobaan simpan sebelumnya
         SembunyikanError();
@@ -136,13 +140,34 @@ public partial class MainWindow : Window
         // Jika tidak sedang edit -> TAMBAH
         if (indexEdit == -1)
         {
+            await database.InsertPesananAsync(
+                kode,
+                pelanggan,
+                menu,
+                tipePesanan,
+                tanggalPesanan.DateTime,
+                catatan,
+                noHp
+            );
+
             semuaPesanan.Add(data);
         }
         // Jika sedang edit -> UPDATE
         else
         {
+            string kodePesananLama = semuaPesanan[indexEdit].Split(" | ")[0];
+
+            await database.UpdatePesananAsync(
+                kodePesananLama,
+                pelanggan,
+                menu,
+                tipePesanan,
+                tanggalPesanan.DateTime,
+                catatan,
+                noHp
+            );
+
             semuaPesanan[indexEdit] = data;
-            indexEdit = -1;
         }
 
         // Tampilkan kembali seluruh data
@@ -166,7 +191,7 @@ public partial class MainWindow : Window
         txtKode.Focus();
     }
 
-    private void BtnHapus_Click(object? sender, RoutedEventArgs e)
+    private async void BtnHapus_Click(object? sender, RoutedEventArgs e)
     {
         if (lstPesanan.SelectedItem == null)
         {
@@ -194,6 +219,8 @@ public partial class MainWindow : Window
 
         if (indexData >= 0 && indexData < semuaPesanan.Count)
         {
+            string kodePesanan = semuaPesanan[indexData].Split(" | ")[0];
+            await database.DeletePesananAsync(kodePesanan);
             semuaPesanan.RemoveAt(indexData);
         }
 
@@ -291,7 +318,7 @@ public partial class MainWindow : Window
         indexHasilSearch.Clear();
     }
 
-    private void BtnCari_Click(object? sender, RoutedEventArgs e)
+    private async void BtnCari_Click(object? sender, RoutedEventArgs e)
     {
         string keyword = txtCari.Text?.Trim() ?? "";
 
@@ -299,25 +326,34 @@ public partial class MainWindow : Window
         indexHasilSearch.Clear();
 
         if (string.IsNullOrWhiteSpace(keyword))
-        {
-            TampilkanSemuaData();
-            return;
-        }
+            {
+                TampilkanSemuaData();
+                return;
+            }
 
-        for (int i = 0; i < semuaPesanan.Count; i++)
+            try
         {
-            string data = semuaPesanan[i];
+            var hasilSearch = await database.SearchPesananAsync(keyword);
 
-            if (data.Contains(
-                keyword,
-                StringComparison.OrdinalIgnoreCase))
+            foreach (var data in hasilSearch)
             {
                 lstPesanan.Items.Add(data);
-                indexHasilSearch.Add(i);
-            }
-        }
 
-        UpdateSearchCounter(lstPesanan.Items.Count);
+                // Cari posisi data tersebut di semuaPesanan
+                int index = semuaPesanan.IndexOf(data);
+
+                if (index >= 0)
+                {
+                    indexHasilSearch.Add(index);
+                }
+            }
+
+            UpdateSearchCounter(lstPesanan.Items.Count);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Gagal mencari data: {ex.Message}");
+        }
     }
 
     private void TampilkanSemuaData()
@@ -378,4 +414,41 @@ public partial class MainWindow : Window
         txtCounter.Text =
             $"Hasil Pencarian: {jumlahHasil} dari {semuaPesanan.Count}";
     }
+
+    private async Task LoadDataFromDatabaseAsync()
+    {
+        try
+        {
+            var data = await database.GetAllPesananAsync();
+
+            semuaPesanan.Clear();
+
+            foreach (var pesanan in data)
+            {
+                semuaPesanan.Add(pesanan);
+            }
+
+            TampilkanSemuaData();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Gagal mengambil data {ex.Message}");
+        }
+    }
+
+    // Only for database testing
+    // private async void BtnTestDatabase_Click(
+    //     object? sender,
+    //     RoutedEventArgs e)
+    // {
+    //     var database = new DatabaseService();
+
+    //     bool berhasil = await database.TestConnectionAsync();
+
+    //     Console.WriteLine(
+    //         berhasil
+    //             ? "DATABASE CONNECTED!"
+    //             : "DATABASE CONNECTION FAILED!"
+    //     );
+    // }
 }
