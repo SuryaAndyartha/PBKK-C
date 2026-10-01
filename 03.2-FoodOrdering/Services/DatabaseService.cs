@@ -7,7 +7,7 @@ namespace FoodOrdering;
 
 public class DatabaseService
 {
-    private readonly string connectionString = "Server=localhost;Port=3306;Database=FoodOrdering_DB;User ID=surya;Password=Surya201205;";
+    private readonly string connectionString = "Server=[your_server];Port=[your_port];Database=[your_database];User ID=[your_username];Password=[your_password];";
 
     public async Task<bool> TestConnectionAsync()
     {
